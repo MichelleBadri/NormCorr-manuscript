@@ -1,0 +1,10 @@
+correlation:
+  - clr.corshrink
+  - tss.corshrink
+  - rhoprop
+  - rhoshrink
+consensus:
+  - clr.corshrink
+  - rhoshrink
+  - asinh.corshrink
+  - vst.corshrink
