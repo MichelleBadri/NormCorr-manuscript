@@ -5,6 +5,8 @@ correlation:
   - rhoshrink
 consensus:
   - clr.corshrink
-  - rhoshrink
-  - asinh.corshrink
+  - tss.corshrink
   - vst.corshrink
+  - rhoshrink
+
+
