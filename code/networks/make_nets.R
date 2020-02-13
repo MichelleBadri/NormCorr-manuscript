@@ -8,6 +8,9 @@ est.list <- readRDS("data/RDS/est_all.RDS")
 est <- est.list$'1_9000'
 ## keep only correlation/proportionality estimates
 est <- est[grep("cor|rho", names(est))]
+
+## Keep correlations/proportionalities and unlist 1 level
+est.list.split <- unlist(lapply(est.list, function(x) x[grep("cor|rho", names(x))]), recursive=FALSE)
 rm(est.list)
 
 cor_to_graph <- function(R, nedges=2000, rseed=10010) {
@@ -32,7 +35,13 @@ cor_to_graph <- function(R, nedges=2000, rseed=10010) {
   ## Store Phylum and Family as vertex attributes
   V(G)$Rank2 <- ag.filt3@tax_table@.Data[V(G)$name,"Rank2"]
   V(G)$Rank5 <- ag.filt3@tax_table@.Data[V(G)$name,"Rank5"]
-
+  V(G)$Rank6 <- paste(ag.filt3@tax_table@.Data[V(G)$name,"Rank4"],ag.filt3@tax_table@.Data[V(G)$name,"Rank5"],ag.filt3@tax_table@.Data[V(G)$name,"Rank6"])
+  
+  
+  
+  G <- set.graph.attribute(G, "assortativity_genus", assortativity.nominal(G,types=as.numeric(as.factor(V(G)$Rank6))))
+  G <- set.graph.attribute(G, "max_modularity", max(fgreedy$modularity))
+  
   ## Store FR layout as vertex attributes
   set.seed(rseed)
   l <- layout.fruchterman.reingold(G)
@@ -45,4 +54,10 @@ igr_li <- parallel::mclapply(est, cor_to_graph,
                          mc.cores=parallel::detectCores(),
                          mc.preschedule=FALSE)
 
+igr_li_allsub <- parallel::mclapply(est.list.split, cor_to_graph,
+                             mc.cores=parallel::detectCores(),
+                             mc.preschedule=FALSE)
+
+
 saveRDS(igr_li, file="data/RDS/igraph_full.RDS")
+saveRDS(igr_li_allsub, file="data/RDS/igraph_subsets.RDS")

@@ -23,13 +23,13 @@ error=function(e) NULL
 )
 dev.off()
 
+source('code/networks/plot_helpers.R')
 ## Create and plot venn diagram
 pdf("plots/venndiagram.pdf", width=6, height=6)
 do.call(draw.quad.venn, as.list(plot_venn_d(igr_li)))
 dev.off()
 
 ## Create and plot consensus network
-source('code/networks/plot_helpers.R')
 ## Merge all graphs / attributes
 igr_consens <- gr_intersect(igr_li)
 
