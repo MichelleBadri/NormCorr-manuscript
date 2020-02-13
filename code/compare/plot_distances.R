@@ -6,12 +6,12 @@ library(Matrix)
 source("code/compare/data_helpers.R")
 
 ## convert distance matrix into "edge" list
-unpack <- function(x) {
+unpack_cor <- function(x) {
   # x => distance matrix
   ex <- Matrix::Matrix(as.matrix(x), sparse=TRUE)
   es <- summary(ex)
-  es[,1] <- dtypes[es[,1]]
-  es[,2] <- dtypes[es[,2]]
+  es[,1] <- dtypes_cor[es[,1]]
+  es[,2] <- dtypes_cor[es[,2]]
   ## filter identical data types
   es <- es[es[,1]==es[,2],]
   colnames(es) <- c("dtype", "dtype", "dist")
@@ -20,7 +20,7 @@ unpack <- function(x) {
 
 n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
 dist_plot_cor <- function(X, metadf, main="") {
-  Xdf <- left_join(unpack(X), metadf, by='dtype')
+  Xdf <- left_join(unpack_cor(X), metadf, by='dtype')
    ggplot(aes(x=n, y=dist, col=method, group=group, linetype=association, shape=method), data=Xdf) +
     stat_summary(fun.y=mean,  geom='point', data= subset(Xdf,association!="cor"), size=2.5) +
     stat_summary(fun.y=mean,  geom='line') +
@@ -40,6 +40,19 @@ for (i in 1: length(dmat_all_cor))
 dev.off()
 
 
+
+## convert distance matrix into "edge" list
+unpack <- function(x) {
+  # x => distance matrix
+  ex <- Matrix::Matrix(as.matrix(x), sparse=TRUE)
+  es <- summary(ex)
+  es[,1] <- dtypes[es[,1]]
+  es[,2] <- dtypes[es[,2]]
+  ## filter identical data types
+  es <- es[es[,1]==es[,2],]
+  colnames(es) <- c("dtype", "dtype", "dist")
+  as.data.frame(es[,2:3])
+}
 
 n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
 dist_plot <- function(X, metadf, main="") {

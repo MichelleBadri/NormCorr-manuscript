@@ -14,13 +14,13 @@ col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
 shape   <- unlist(yaml::yaml.load_file('code/helpers/pointshape.yml'))
 
 ## Dataset types
-datasets <- attr(dmat_all_cor, 'datasets')
-dtypes <- stringr::str_split_fixed(datasets, "_", 2)[,2]
+datasets_cor <- attr(dmat_all_cor, 'datasets')
+dtypes_cor <- stringr::str_split_fixed(datasets_cor, "_", 2)[,2]
 coldf <- data.frame(method=names(col), col=col, stringsAsFactors=FALSE)
 shapedf <- data.frame(method=names(shape), shape=shape, stringsAsFactors=FALSE)
-ddf_cor <- stringr::str_split_fixed(datasets, "_|\\.", 4) %>%
+ddf_cor <- stringr::str_split_fixed(datasets_cor, "_|\\.", 4) %>%
           as.data.frame(stringsAsFactors=FALSE) %>%
-          transmute(dtype=dtypes,
+          transmute(dtype=dtypes_cor,
                  rep=as.numeric(V1),
                  n=as.numeric(V2),
                  method=V3,
