@@ -2,7 +2,7 @@ suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
 
 ## load dmat_all, dataset df (ddf), color vector (col)
-source("code/compare/data_helpers_embed.R")
+source("code/compare/data_helpers.R")
 
 ## compute all embeddings via isometric MDS
 isomds <- function(x) {set.seed(10010) ; MASS::isoMDS(x, k=3)$points}
