@@ -2,7 +2,7 @@ suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
 
 ## load dmat_all, dataset df (ddf), color vector (col)
-source("code/compare/data_helpers.R")
+source("code/compare/data_helpers_embed.R")
 
 ## compute all embeddings via isometric MDS
 isomds <- function(x) {set.seed(10010) ; MASS::isoMDS(x, k=3)$points}
@@ -34,7 +34,7 @@ plot2d <- function(X, metadf, main="") {
   ## Plot embedding group centers for each method/sample size
   Xmean <- Xdf %>% group_by(method, n) %>% summarize(V1=mean(V1), V2=mean(V2))
   ggplot(aes(x=V1, y=V2, col=method, size=n), data=Xdf) +
-    geom_point(alpha=.15) +
+    geom_point(alpha=.2) +
     scale_color_manual(values=col) +
     scale_size_continuous(breaks=n) +
     geom_point(data=Xmean, alpha=.8) +

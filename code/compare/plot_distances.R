@@ -19,10 +19,10 @@ unpack <- function(x) {
 }
 
 n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
-dist_plot <- function(X, metadf, main="") {
+dist_plot_cor <- function(X, metadf, main="") {
   Xdf <- left_join(unpack(X), metadf, by='dtype')
    ggplot(aes(x=n, y=dist, col=method, group=group, linetype=association, shape=method), data=Xdf) +
-    stat_summary(fun.y=mean,  geom='point', data= subset(Xdf,association=="corshrink"), size=2.5) +
+    stat_summary(fun.y=mean,  geom='point', data= subset(Xdf,association!="cor"), size=2.5) +
     stat_summary(fun.y=mean,  geom='line') +
     stat_summary(fun.data=mean_sdl, geom='linerange', alpha=0.4) +
    # stat_summary(fun.data=mean_sdl, geom='smooth',se=TRUE, alpha=0.15)+
@@ -34,7 +34,29 @@ dist_plot <- function(X, metadf, main="") {
     theme_bw()
 }
 
+pdf("plots/intramethod_distances_pearson_corshrink_propr.pdf", width=7, height=4)
+for (i in 1: length(dmat_all_cor))
+ print(dist_plot_cor(dmat_all_cor[[i]], ddf_cor, names(dmat_all_cor)[i]))
+dev.off()
+
+
+
+n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
+dist_plot <- function(X, metadf, main="") {
+    Xdf <- left_join(unpack(X), metadf, by='dtype')
+    ggplot(aes(x=n, y=dist, col=method, shape=method), data=Xdf) +
+      stat_summary(fun.y=mean,  geom='point', size=2.5) +
+      stat_summary(fun.y=mean,  geom='line') +
+      stat_summary(fun.data=mean_sdl, geom='linerange', alpha=0.4) +
+      # stat_summary(fun.data=mean_sdl, geom='smooth',se=TRUE, alpha=0.15)+
+      scale_color_manual(values=col) +
+      scale_shape_manual(values=as.numeric(shape)) +
+      scale_x_log10(breaks=n) +
+      ylab("distance") + ggtitle(main) +
+      theme_bw()
+  }
+
 pdf("plots/intramethod_distances.pdf", width=7, height=4)
-for (i in 1: length(dmat_all))
- print(dist_plot(dmat_all[[i]], ddf, names(dmat_all)[i]))
+for (i in 1:length(dmat_all))
+  print(dist_plot(dmat_all[[i]], ddf, names(dmat_all)[i]))
 dev.off()
