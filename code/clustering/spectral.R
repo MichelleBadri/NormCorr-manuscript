@@ -27,9 +27,9 @@ spectral.cluster <- function(R, k1=3, k2='eigengap', kmax=20) {
   # k1 => nearest neighbors
   # k2 => clustering strategy or k2 clusters
   # kmax => maximum number of 'clusters' to consider for the eigengap method
-
-   ## construct similarity matrix
-  S <- 1-(sqrt(1-R)/2)
+  
+  ## construct similarity matrix
+  S <- 1-(sqrt((1-R)/2))
   A <- make.affinity(S , 2, 'or')
   ## degree matrix
   d <- apply(A, 1, sum)
@@ -51,7 +51,7 @@ spectral.cluster <- function(R, k1=3, k2='eigengap', kmax=20) {
   else {
     .NotYetImplemented("No other methods available")
   }
-
+  
   T  <- evL$vectors[,1:k2]
   T  <- T/sqrt(rowSums(T^2))
   # define 0/0 := 0
@@ -79,12 +79,12 @@ subset <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['correlation']]
 
 ## Try 2 cluster detection methods
 cl_egap20 <- parallel::mclapply(est[subset], spectral.cluster,
-                         k2="eigengap",
-                         mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
+                                k2="eigengap",
+                                mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
 
 cl_comp <- parallel::mclapply(est[subset], spectral.cluster,
-                        k2="components",
-                        mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
+                              k2="components",
+                              mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
 
 
 

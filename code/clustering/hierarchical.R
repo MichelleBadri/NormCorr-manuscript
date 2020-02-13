@@ -7,7 +7,7 @@ est <- est.list$'1_9000'
 rm(est.list)
 
 hier.cluster <- function(R) {
-  D    <- sqrt(1-R)/2
+  D    <- sqrt((1-R)/2)
   Dmat <- as.dist(D)
   hclust(Dmat, method="ward.D2") #Ward D2 squares the distances
 }
