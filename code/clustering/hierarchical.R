@@ -1,5 +1,5 @@
-library(dendextend)
-library(circlize)
+suppressPackageStartupMessages(library(dendextend))
+suppressPackageStartupMessages(library(circlize))
 
 est.list <- readRDS("data/RDS/est_all.RDS")
 ## Keep 1 large estimate

@@ -1,6 +1,7 @@
 suppressPackageStartupMessages(library(igraph))
 library(stringr)
 suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
 
 
 igr_li_allsub <- readRDS("data/RDS/igraph_subsets.RDS")
