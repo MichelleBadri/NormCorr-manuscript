@@ -4,6 +4,7 @@ library(ggplot2)
 
 ## Load method colors as a named vector
 col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
+
 ## Unlist correlations/ convert to data frames for ggplot2/ggridges
 list2df <- function(est.list) {
   reshape2::melt(est.list) %>%
