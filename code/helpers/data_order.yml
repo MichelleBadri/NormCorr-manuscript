@@ -1,0 +1,28 @@
+main:
+  - clr
+  - tss
+  - rhoprop
+  - rhoshrink
+  
+supp:
+  - vst
+  - asinh
+  - css
+  - rle
+  - com
+  - wren
+  - raw
+  
+allnorm:
+  - clr
+  - vst
+  - asinh
+  - css
+  - rle
+  - com
+  - wren
+  - tss
+  - raw
+  - rhoprop
+  - rhoshrink
+

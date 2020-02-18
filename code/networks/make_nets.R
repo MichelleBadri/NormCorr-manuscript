@@ -13,11 +13,11 @@ est <- est[grep("cor|rho", names(est))]
 est.list.split <- unlist(lapply(est.list, function(x) x[grep("cor|rho", names(x))]), recursive=FALSE)
 rm(est.list)
 
-cor_to_graph <- function(R, nedges=2000, rseed=10010) {
+
+cor_to_graph <- function(R, nedges=2000, rseed=10) {
   ## R => correlation matrix
   ## nedges => rank edges to keep
   ## rseed => random seed for layout
-
   ## convert abs correlations to edge rank matrix sans diagonal/ keep `nedges` edges
   rankR <- matrix(rank(-abs(R-diag(diag(R)))), dim(R))
   adj <- (rankR<=nedges*2)*R
@@ -47,13 +47,32 @@ cor_to_graph <- function(R, nedges=2000, rseed=10010) {
   l <- layout.fruchterman.reingold(G)
   V(G)$l1 <- l[,1]
   V(G)$l2 <- l[,2]
+  # 
+  # E(G)$color <- ifelse(E(G)$sign>0, "#159C0033", "#FF000033")
+  # V(G)$color <- col[V(G)$Rank5]
+  # V(G)$shape <- shapes[as.factor(V(G)$Rank2)]
+  # ind <- igraph::V(G)$name[which(igraph::degree(G) < 1)]
+  # G <- igraph::delete.vertices(G, ind)
+  # 
+  # plot(G, vertex.label.cex=0.4, vertex.label=NA,
+  #      layout=l, vertex.size=4,
+  #      rescale=TRUE, ylim=c(-1,1), xlim=c(-1,1))
   G
 }
 
-igr_li <- parallel::mclapply(est, cor_to_graph,
-                         mc.cores=parallel::detectCores(),
-                         mc.preschedule=FALSE)
+# igr_li <- parallel::mclapply(est, cor_to_graph,
+#                          mc.cores=parallel::detectCores(),
+#                          mc.preschedule=FALSE)
 
+## Specify seeds for layout orientations 
+seed<- c(10,18,7,9,7,11,2,13,2,13,13)
+
+## compute graph
+for (i in 1:length(est)) {
+    igr_li[[i]] <- cor_to_graph(est[[i]],rseed=seed[i])
+  }
+  
+## compute graph for all subsets for the community analysis line plots
 igr_li_allsub <- parallel::mclapply(est.list.split, cor_to_graph,
                              mc.cores=parallel::detectCores(),
                              mc.preschedule=FALSE)

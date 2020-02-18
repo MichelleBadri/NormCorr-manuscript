@@ -1,3 +1,5 @@
+library(ggplot2)
+library(reshape)
 est.list <- readRDS("data/RDS/est_all.RDS")
 ## Keep 1 largest estimate
 est <- est.list$'1_9000'
@@ -7,6 +9,8 @@ est.cor.rho <-est[grep("cor|rho", names(est))]
 ## Load in data
 suppressPackageStartupMessages(library(phyloseq))
 ag.filt3 <- readRDS("data/RDS/ag.filt3.RDS")
+
+maxeig=16
 
 ## Create affinity matrix from nearest neighbor similarity matrix
 make.affinity <- function(S, k=3, sym="or") {
@@ -41,27 +45,20 @@ spectral.cluster.gap <- function(R, k1=3, k2='eigengap', kmax=20) {
   return(rev(evL$values)[1:(kmax-1)])
 }
 
-
 cl_gap <- parallel::mclapply(est.cor.rho, spectral.cluster.gap,
-                                k2="eigengap",kmax=16)
-
+                                k2="eigengap",kmax=maxeig)
 
 gap <- cbind(eigen=seq(1:15),do.call(cbind, cl_gap))
 eigs_melt<-melt.data.frame(data.frame(gap), id.vars = "eigen")
 
-## Load method colors as a named vector
+## Load method colors and shapes as a named vector
 col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
-## method shape named vector
 shape   <- unlist(yaml::yaml.load_file('code/helpers/pointshape.yml'))
 
 eigs_melt$variable <- sapply(strsplit(as.character(eigs_melt$variable) ,split="\\."), `[`, 1)
 
+
 pdf('plots/spectral_kcomponents.pdf')
 lines <- ggplot(data=eigs_melt, aes(x=eigen, y=value,group=variable,colour=variable,shape=variable))+ geom_line(aes(y=value,colour=factor(variable)),alpha=0.6,size=1.3) + geom_point(size=2.6)+scale_color_manual(values = col) +xlab("Eigenvalue Rank") +ylab("Value")+scale_shape_manual(values=as.numeric(shape))
 lines +theme_linedraw() +theme(text = element_text(size=10), axis.text.x = element_text(angle=90, hjust=1))+ theme(legend.title=element_blank())  
-eigs_melt$eigenvalue <- factor(eigs_melt$eigenvalue, levels=eigs_melt$eigenvalue[1:maxeig])
-lines <- ggplot(data=eigs_melt, aes(x=eigenvalue, y=value,group=variable,colour=variable,shape=variable))+ geom_line(aes(y=value,colour=factor(variable)),alpha=0.7,size=1.2) + geom_point(size=1.6)+scale_color_manual(values = cols) +xlab("Eigenvalue Position") +ylab("Value")+scale_shape_manual(values=3:14)
-
-lines +theme_linedraw() +theme(text = element_text(size=10), axis.text.x = element_text(angle=90, hjust=1))+ theme(legend.title=element_blank())  + scale_x_continuous(breaks = c(1:15)) 
- 
-  dev.off()
+dev.off()

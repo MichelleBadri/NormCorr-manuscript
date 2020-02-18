@@ -12,7 +12,7 @@ plot_mod_net <- function(G, main="", dropiso=TRUE) {
   plot(G, vertex.shape="none", vertex.label.cex=0.8,
       vertex.label.color="black",
       main=main, layout=l, #vertex.size=4, edge.width=1,
-      rescale=TRUE, ylim=c(-0.7,0.7), xlim=c(-0.7,0.7))
+      rescale=TRUE, ylim=c(-1,1), xlim=c(-1,1))
 }
 
 

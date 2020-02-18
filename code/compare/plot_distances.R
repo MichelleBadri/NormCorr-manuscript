@@ -34,7 +34,7 @@ dist_plot_cor <- function(X, metadf, main="") {
     theme_bw()
 }
 
-pdf("plots/intramethod_distances_pearson_corshrink_propr.pdf", width=7, height=4)
+pdf("plots/intramethod_distances_pearson_corshrink_propr.pdf", width=7, height=5)
 for (i in 1: length(dmat_all_cor))
  print(dist_plot_cor(dmat_all_cor[[i]], ddf_cor, names(dmat_all_cor)[i]))
 dev.off()
