@@ -21,16 +21,17 @@ unpack_cor <- function(x) {
 n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
 dist_plot_cor <- function(X, metadf, main="") {
   Xdf <- left_join(unpack_cor(X), metadf, by='dtype')
-   ggplot(aes(x=n, y=dist, col=method, group=group, linetype=association, shape=method), data=Xdf) +
+   ggplot(aes(x=n, y=dist, col=factor(method, levels=allord), group=group, 
+              linetype=association, shape=factor(method, levels=allord)), data=Xdf) +
     stat_summary(fun.y=mean,  geom='point', data= subset(Xdf,association!="cor"), size=2.5) +
     stat_summary(fun.y=mean,  geom='line') +
     stat_summary(fun.data=mean_sdl, geom='linerange', alpha=0.4) +
    # stat_summary(fun.data=mean_sdl, geom='smooth',se=TRUE, alpha=0.15)+
-    scale_color_manual(values=col) +
-    scale_shape_manual(values=as.numeric(shape)) +
+    scale_color_manual("method",values=col) +
+    scale_shape_manual("method",values=as.numeric(shape)) +
     scale_linetype_manual(values=c("dashed","solid","twodash"))+
     scale_x_log10(breaks=n) +
-    ylab("distance") + ggtitle(main) +
+    ylab("CMD distance") + ggtitle(main) +
     theme_bw()
 }
 
@@ -57,19 +58,20 @@ unpack <- function(x) {
 n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
 dist_plot <- function(X, metadf, main="") {
     Xdf <- left_join(unpack(X), metadf, by='dtype')
-    ggplot(aes(x=n, y=dist, col=method, shape=method), data=Xdf) +
+    ggplot(aes(x=n, y=dist,col=factor(method, levels=allord), 
+               shape=factor(method, levels=allord)), data=Xdf) +
       stat_summary(fun.y=mean,  geom='point', size=2.5) +
       stat_summary(fun.y=mean,  geom='line') +
       stat_summary(fun.data=mean_sdl, geom='linerange', alpha=0.4) +
       # stat_summary(fun.data=mean_sdl, geom='smooth',se=TRUE, alpha=0.15)+
-      scale_color_manual(values=col) +
-      scale_shape_manual(values=as.numeric(shape)) +
+      scale_color_manual("method",values=col) +
+      scale_shape_manual("method",values=as.numeric(shape)) +
       scale_x_log10(breaks=n) +
       ylab("distance") + ggtitle(main) +
-      theme_bw()
-  }
+      theme_bw()+ theme(legend.title=element_text(size=14), legend.text=element_text(size=12))
+}
 
-pdf("plots/intramethod_distances.pdf", width=7, height=4)
+pdf("plots/intramethod_distances.pdf", width=7, height=5)
 for (i in 1:length(dmat_all))
   print(dist_plot(dmat_all[[i]], ddf, names(dmat_all)[i]))
 dev.off()

@@ -42,6 +42,9 @@ col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
 ## method shape named vector
 shape   <- unlist(yaml::yaml.load_file('code/helpers/pointshape.yml'))
 
+## order of methods for plotting legends 
+allord <- yaml::yaml.load_file('code/helpers/data_order.yml')[['allnorm']]
+
 ## Dataset types
 datasets <- attr(dmat_all, 'datasets')
 dtypes <- stringr::str_split_fixed(datasets, "_", 2)[,2]

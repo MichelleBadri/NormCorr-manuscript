@@ -33,13 +33,15 @@ plot2d <- function(X, metadf, main="") {
   Xdf <- cbind(as.data.frame(X), ddf)
   ## Plot embedding group centers for each method/sample size
   Xmean <- Xdf %>% group_by(method, n) %>% summarize(V1=mean(V1), V2=mean(V2))
-  ggplot(aes(x=V1, y=V2, col=method, size=n), data=Xdf) +
+  ggplot(aes(x=V1, y=V2, col=factor(method,levels=allord), size=n), data=Xdf) +
     geom_point(alpha=.2) +
-    scale_color_manual(values=col) +
-    scale_size_continuous(breaks=n) +
+    scale_color_manual("method",values=col) +
+    scale_size_continuous("n",breaks=n) +
+   # scale_y_continuous(limits=c(-20,20))+
+   # scale_x_continuous(limits=c(-20,20))+ ## used to zoom in on MDS plot
     geom_point(data=Xmean, alpha=.8) +
     xlab("MDS1") + ylab("MDS2") + ggtitle(main) +
-    theme_bw()
+    theme_bw() + theme(legend.title=element_text(size=14), legend.text=element_text(size=12))
 }
 
 ## Three options for projection matrices
@@ -48,7 +50,7 @@ A <- matrix(c(1,0,0,0,.8,-.6,0,.6,.8),nrow=3)
 B <- matrix(c(.6,.1,.8,.8,-.04,-.6,.04,1,.1),nrow=3)
 C <- matrix(c(.7,-.5,4,.7,.5,-.5,-.025,.7,.7), nrow=3)
 
-pdf("plots/embeddings_2d.pdf")
+pdf("plots/embeddings_2d.pdf", width=8, height=6)
 for (i in 1:length(mds_all))
  print(plot2d(mds_all[[i]] %*% t(C), ddf, names(mds_all)[i]))
 dev.off()
