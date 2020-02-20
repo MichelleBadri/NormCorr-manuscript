@@ -54,11 +54,17 @@ eigs_melt<-melt.data.frame(data.frame(gap), id.vars = "eigen")
 ## Load method colors and shapes as a named vector
 col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
 shape   <- unlist(yaml::yaml.load_file('code/helpers/pointshape.yml'))
+allnorm <- yaml::yaml.load_file('code/helpers/data_order.yml')[['allnorm']]
 
 eigs_melt$variable <- sapply(strsplit(as.character(eigs_melt$variable) ,split="\\."), `[`, 1)
 
 
-pdf('plots/spectral_kcomponents.pdf')
-lines <- ggplot(data=eigs_melt, aes(x=eigen, y=value,group=variable,colour=variable,shape=variable))+ geom_line(aes(y=value,colour=factor(variable)),alpha=0.6,size=1.3) + geom_point(size=2.6)+scale_color_manual(values = col) +xlab("Eigenvalue Rank") +ylab("Value")+scale_shape_manual(values=as.numeric(shape))
-lines +theme_linedraw() +theme(text = element_text(size=10), axis.text.x = element_text(angle=90, hjust=1))+ theme(legend.title=element_blank())  
+pdf('plots/spectral_kcomponents.pdf', width=8, height=6)
+lines <- ggplot(data=eigs_melt, aes(x=eigen, y=value,group=factor(variable,levels=allnorm),
+                                    colour=factor(variable,levels=allnorm),shape=factor(variable,levels=allnorm)))+ 
+  geom_line(aes(y=value,colour=factor(variable, levels=allnorm)),alpha=0.6,size=1.3) + 
+  geom_point(size=2.6)+scale_color_manual("method",values = col) +xlab("Eigenvalue Rank") +
+  ylab("Value")+scale_shape_manual("method",values=as.numeric(shape))
+  lines +theme_linedraw() +theme(text = element_text(size=10),axis.text.x = element_text(angle=90, hjust=1))+ 
+  theme(legend.title=element_blank()) + scale_x_continuous(breaks=c(seq(1:16)))
 dev.off()

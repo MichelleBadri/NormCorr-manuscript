@@ -3,10 +3,18 @@ correlation:
   - tss.corshrink
   - rhoprop
   - rhoshrink
+  
 consensus:
   - clr.corshrink
   - rhoshrink
   - tss.corshrink
   - rhoprop
 
-
+supplement:
+  - vst.corshrink
+  - asinh.corshrink
+  - css.corshrink
+  - rle.corshrink
+  - com.corshrink
+  - wren.corshrink
+  - raw.corshrink

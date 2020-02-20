@@ -26,3 +26,40 @@ allnorm:
   - rhoprop
   - rhoshrink
 
+barplotorder:
+- f__Ruminococcaceae
+- f__Lachnospiraceae
+- f__
+- f__Bacteroidaceae
+- f__Clostridiaceae
+- f__Porphyromonadaceae
+- f__Rikenellaceae
+- f__Erysipelotrichaceae
+- f__Prevotellaceae
+- f__Veillonellaceae
+- f__Streptococcaceae
+- f__[Tissierellaceae]
+- f__[Barnesiellaceae]
+- f__[Odoribacteraceae]
+- f__Coriobacteriaceae
+- f__Bifidobacteriaceae
+- f__Christensenellaceae
+- f__Turicibacteraceae
+- f__Alcaligenaceae
+- f__Enterobacteriaceae
+- f__Verrucomicrobiaceae
+- f__[Paraprevotellaceae]
+- f__Corynebacteriaceae
+- f__Desulfovibrionaceae
+- f__Staphylococcaceae
+- f__[Mogibacteriaceae]
+- f__Actinomycetaceae
+- f__Carnobacteriaceae
+- f__Enterococcaceae
+- f__Micrococcaceae
+- f__Neisseriaceae
+- f__Pasteurellaceae
+- f__Oxalobacteraceae
+- f__Peptostreptococcaceae
+
+

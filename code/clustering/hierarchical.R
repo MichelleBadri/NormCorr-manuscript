@@ -25,3 +25,18 @@ for (i in 1:length(hcli)) {
   plot_circos(hcli[[i]], names(hcli)[i])
 }
 dev.off()
+
+## Plot supplement
+supp <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['supplement']]
+ 
+hcli_supp <- parallel::mclapply(est[supp], hier.cluster,
+                           mc.cores=parallel::detectCores(),
+                           mc.preschedule=FALSE)
+
+source('code/clustering/plot_helpers.R')
+
+pdf('plots/hierarchical_clustering_supp.pdf')
+for (i in 1:length(hcli_supp)) {
+  plot_circos(hcli_supp[[i]], names(hcli_supp)[i])
+}
+dev.off()
