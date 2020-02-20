@@ -25,7 +25,7 @@ dev.off()
 
 source('code/networks/plot_helpers.R')
 ## Create and plot venn diagram
-pdf("plots/venndiagram.pdf", width=6, height=6)
+pdf("plots/venndiagram.pdf", width=5.5, height=5)
 do.call(draw.quad.venn, as.list(plot_venn_d(igr_li)))
 dev.off()
 
@@ -34,5 +34,5 @@ dev.off()
 igr_consens <- gr_intersect(igr_li)
 
 pdf("plots/consensus_network.pdf", width=6, height=6)
-plot_phy_net(igr_consens, "Consensus")
+plot_phy_net(igr_consens, "")
 dev.off()
