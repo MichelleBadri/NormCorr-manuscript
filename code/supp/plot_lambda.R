@@ -20,22 +20,25 @@ colnames(lamlistlong)[2] <- "method"
 col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
 ## method shape named vector
 shape   <- unlist(yaml::yaml.load_file('code/helpers/pointshape.yml'))
+## order of methods for plotting legends 
+allord <- yaml::yaml.load_file('code/helpers/data_order.yml')[['allnorm']]
+
 n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
 
 pdf("plots/lambda_shrinkage.pdf", width=7, height=4)
-ggplot(aes(x=int, y=value, col=method,shape=method), data=lamlistlong) +
-  stat_summary(fun.y=mean,  geom='point', size=2.5) +
+ggplot(aes(x=int, y=value, col=factor(method, levels=allord), shape=factor(method, levels=allord)), data=lamlistlong) +
+  stat_summary(fun.y=mean,  geom='point', size=2.5,alpha=0.8) +
   stat_summary(fun.y=mean,  geom='line') +
-  stat_summary(fun.data=mean_sdl, geom='linerange', alpha=0.4) +
+  stat_summary(fun.data=mean_sdl, geom='linerange') +
   # stat_summary(fun.data=mean_sdl, geom='smooth',se=TRUE, alpha=0.15)+
-  scale_color_manual(values=col) +
-  scale_shape_manual(values=as.numeric(shape)) +
+  scale_color_manual("method",values=col) +
+  scale_shape_manual("method",values=as.numeric(shape)) +
   scale_x_log10(breaks=n) +
   ylab("lambda") +
   theme_bw()
 dev.off()
 
-
+  
 lambdavar <- c()
 for(i in 1:length(est.list)){
   lambdavar[[i]]<- unlist(lapply(est.list[[i]], attr,"lambda.var"))
@@ -54,9 +57,9 @@ ggplot(aes(x=int, y=value, col=variable,shape=variable), data=rholamda) +
   stat_summary(fun.y=mean,  geom='line') +
   stat_summary(fun.data=mean_sdl, geom='linerange', alpha=0.4) +
   # stat_summary(fun.data=mean_sdl, geom='smooth',se=TRUE, alpha=0.15)+
-  scale_color_manual(values=c("#6F1E51" ,"#6F1E51" )) +
-  scale_shape_manual(values=c(1,16)) +
+  scale_color_manual("shrink type",values=c("#6F1E51" ,"#6F1E51" )) +
+  scale_shape_manual("shrink type",values=c(1,16)) +
   scale_x_log10(breaks=n) +
-  ylab("lambda") + ggtitle("covariance shrinkage for rho shrink") +
+  ylab("lambda")+
   theme_bw()
 dev.off()
