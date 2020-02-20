@@ -7,7 +7,7 @@ subset <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['consensus']]
 igr_li <- igr_li[subset]
 
 ## extract signed edge list from igraph list
-get_signed_edges <- function(ig) apply(cbind(get.edgelist(ig), E(ig)$sign), 1, paste, collapse="-")
+get_signed_edges <- function(igr_li) apply(cbind(get.edgelist(igr_li), E(igr_li)$sign), 1, paste, collapse="-")
 
 edge_li <- lapply(igr_li, get_signed_edges)
 

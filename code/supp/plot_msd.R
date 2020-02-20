@@ -1,3 +1,4 @@
+suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(vsn))
 
 # Read in normalized data matrices

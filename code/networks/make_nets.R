@@ -57,6 +57,7 @@ seed<- c(10,18,7,9,7,11,2,13,2,13,13)
 igr_li <- list()
 for (i in 1:length(est)) {igr_li[[i]] <- cor_to_graph(est[[i]],rseed=seed[i])}
   
+names(igr_li)<- names(est)
 ## compute graph for all subsets for the community analysis line plots
 igr_li_allsub <- parallel::mclapply(est.list.split, cor_to_graph,
                              mc.cores=parallel::detectCores(),
