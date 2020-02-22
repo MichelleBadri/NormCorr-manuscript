@@ -7,7 +7,6 @@ col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
 
 ## Unlist correlations/ convert to data frames for ggplot2/ggridges
 list2df <- function(est.list) {
-  est.list<-est.full_sub 
   reshape2::melt(est.list) %>%
     dplyr::rename(dataset=L1) %>%
     bind_cols(
@@ -25,7 +24,8 @@ suppord <- yaml::yaml.load_file('code/helpers/data_order.yml')[['supp']]
 
 plotDensity <- function(df, main="", levels=order) {
   ggplot(aes(x=value, y=factor(method, levels=rev(levels)), fill=method), data=df %>% filter(method %in% levels)) +
-    facet_wrap(~group) + #,scales = "free_x") +
+    facet_wrap(~group) +
+    #facet_wrap(~group ,scales = "free_x") +
     geom_density_ridges(scale=1.3) +
     scale_fill_manual(values=col) +
     guides(fill=FALSE) + ylab("") +

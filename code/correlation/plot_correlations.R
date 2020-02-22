@@ -16,7 +16,7 @@ est.full_sub  <- unlist(lapply(est.full_sub, unpackcorr), recursive=FALSE)
 est.shuff_sub <- unlist(lapply(est.shuff, unpackcorr), recursive=FALSE)
 
 fulldf  <- list2df(est.full_sub)
-shuffdf <- list2df(est.shuff)
+shuffdf <- list2df(est.shuff_sub)
 
 shuffdf <- shuffdf[shuffdf$n == "50",]
 fulldfsubsmall <- fulldf[fulldf$n=="50",]
@@ -32,8 +32,9 @@ plotDensity(combdf,levels=mainord)
 dev.off()
 
 ## Change subset to plot supplementary ggridges plot
-pdf("plots/correlation_density_supp.pdf", width=8, height=10)
+pdf("plots/correlation_density_supp.pdf", width=8, height=9)
 plotDensity(combdf, levels=suppord)
 dev.off()
+
 
 #source('code/supp/write_density.R', echo=TRUE)
