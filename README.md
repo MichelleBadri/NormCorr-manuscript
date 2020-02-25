@@ -32,7 +32,7 @@ Compare normalization methods and correlation patterns for microbiome data
 │   ├── supp
 │   │   ├── plot_msd.R (plot mean-sd plots)
 │   │   ├── plot_msd.R (plot lambda values for cor shrinkage & rhoshrink)
-│   │   ├── plot_connectedcomponents.R (plot ranked eigenvalues)
+│   │   └── plot_connectedcomponents.R (plot ranked eigenvalues)
 │   └── helpers (helper functions and yaml files)
 ├── data
 │   ├── amgut (American Gut project biom and mapping files)
