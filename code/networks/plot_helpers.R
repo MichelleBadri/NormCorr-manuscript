@@ -12,7 +12,7 @@ plot_mod_net <- function(G, main="", dropiso=TRUE) {
   plot(G, vertex.shape="none", vertex.label.cex=0.8,
       vertex.label.color="black",
       main=main, layout=l, #vertex.size=4, edge.width=1,
-      rescale=TRUE, ylim=c(-0.7,0.7), xlim=c(-0.7,0.7))
+      rescale=TRUE, ylim=c(-1,1), xlim=c(-1,1))
 }
 
 
@@ -146,4 +146,43 @@ edge.color<- function(community, network, weight.within = rgb(1,0,0,alpha=0.2) #
   weights <- ifelse(test = bridges, yes = weight.between, no = weight.within)
   return(weights)
 }
+
+
+
+## method color named vector
+methodcols   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
+
+library(VennDiagram)
+plot_venn_d <- function(igr_li){
+        g1 <- simplify(igr_li[[1]])
+        g2<- simplify(igr_li[[2]])
+        g3 <- simplify(igr_li[[3]])
+        g4<- simplify(igr_li[[4]])
+        area1 <-dim(get.edgelist(g1))[1]
+        area2 <-dim(get.edgelist(g2))[1]
+        area3 <-dim(get.edgelist(g3))[1]
+        area4 <-dim(get.edgelist(g4))[1]
+        n12=ecount(graph.intersection(g1,g2))
+        n13= ecount(graph.intersection(g1,g3))
+        n14=ecount(graph.intersection(g1,g4))
+        n23<-ecount(graph.intersection(g2,g3))
+        n24<-ecount(graph.intersection(g2,g4))
+        n34<-ecount(graph.intersection(g3,g4))
+        n123 <- ecount(graph.intersection(g1,g2,g3))
+        n124 <- ecount(graph.intersection(g1,g2,g4))
+        n134 <- ecount(graph.intersection(g1,g3,g4))
+        n234<- ecount(graph.intersection(g2,g3,g4))
+        n1234<- ecount(graph.intersection(g1,g2,g3,g4))
+        category = sapply(strsplit(names(igr_li),split="\\."), `[`, 1)
+        cat.col = methodcols[sapply(strsplit(names(igr_li),split="\\."), `[`, 1)]
+        cex = rep(1.2, 15) 
+        alpha = 0.2
+        cat.cex = 2 
+        margin =0.05
+        scaled=FALSE
+        euler=FALSE
+        args <- list(area1,area2,area3,area4, n12,n13,n14,n23,n24,n34,n123,n124,n134,n234,n1234,category=category,fill=cat.col,cat.col=cat.col,cex=cex,alpha=alpha,cat.cex=cat.cex,margin=margin,scaled=scaled,euler=euler)       
+return(args)
+}
+
 

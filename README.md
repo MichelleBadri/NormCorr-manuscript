@@ -26,8 +26,13 @@ Compare normalization methods and correlation patterns for microbiome data
 │   ├── networks
 │   │   ├── make_nets.R (create relevance networks)
 │   │   ├── plot_nets.R (igraph plotting)
-│   │   ├── consensus.R (upset plots and consensus network)
+│   │   ├── plot_lines.R (community analysis)
+│   │   ├── consensus.R (upset plots, venn diagram and consensus network)
 │   │   └── plot_helpers.R
+│   ├── supp
+│   │   ├── plot_msd.R (plot mean-sd plots)
+│   │   ├── plot_msd.R (plot lambda values for cor shrinkage & rhoshrink)
+│   │   └── plot_connectedcomponents.R (plot ranked eigenvalues)
 │   └── helpers (helper functions and yaml files)
 ├── data
 │   ├── amgut (American Gut project biom and mapping files)
@@ -77,5 +82,13 @@ Rscript code/clustering/hierarchical.R
 ```
 Rscript code/networks/make_nets.R
 Rscript code/networks/plot_nets.R
+Rscript code/networks/plot_lines.R
 Rscript code/networks/consensus.R
+```
+
+### Supplemental figures
+```
+Rscript code/supp/plot_msd.R
+Rscript code/supp/plot_lambda.R
+Rscript code/supp/plot_connectedcomponents.R
 ```

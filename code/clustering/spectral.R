@@ -22,14 +22,13 @@ make.affinity <- function(S, k=3, sym="or") {
 }
 
 ## Normalized spectral clustering, Ng, Jordan & Weiss (2002)
-spectral.cluster <- function(R, k1=3, k2='eigengap', kmax=20) {
+spectral.cluster <- function(R, k1=3, kmax=20) {
   # R => Correlation/proportionality matrix
   # k1 => nearest neighbors
-  # k2 => clustering strategy or k2 clusters
   # kmax => maximum number of 'clusters' to consider for the eigengap method
-
-   ## construct similarity matrix
-  S <- 1-(sqrt(1-R)/2)
+  
+  ## construct similarity matrix
+  S <- 1-(sqrt((1-R)/2))
   A <- make.affinity(S , 2, 'or')
   ## degree matrix
   d <- apply(A, 1, sum)
@@ -38,20 +37,9 @@ spectral.cluster <- function(R, k1=3, k2='eigengap', kmax=20) {
   ## normalized, symmetric Laplacian
   L <- D_isqrt %*% (D - A) %*% D_isqrt
   evL <- eigen(L, symmetric=TRUE)
-  if (k2 == "eigengap") {
-    ## check for the largest gap in the first 20 eigenvalues
-    k2 <- which.max((diff(rev(evL$values)[1:(kmax-1)])))
-  } else if (k2 == "components") {
-    zeroEvals <- which(rev(abs(evL$values)) < 1e-9)
-    tmp <- rle(diff(zeroEvals))
-    k2 <- tmp$lengths[1]+1
-  }  else if (is.numeric(k2)) {
-    ## k2 is the number of clusters
-  }
-  else {
-    .NotYetImplemented("No other methods available")
-  }
-
+  zeroEvals <- which(rev(abs(evL$values)) < 1e-9)
+  tmp <- rle(diff(zeroEvals))
+  k2 <- tmp$lengths[1]+1
   T  <- evL$vectors[,1:k2]
   T  <- T/sqrt(rowSums(T^2))
   # define 0/0 := 0
@@ -77,31 +65,33 @@ cluster_purity <- function(km) {
 ## subset methods for main plots
 subset <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['correlation']]
 
-## Try 2 cluster detection methods
-cl_egap20 <- parallel::mclapply(est[subset], spectral.cluster,
-                         k2="eigengap",
-                         mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
-
 cl_comp <- parallel::mclapply(est[subset], spectral.cluster,
-                        k2="components",
-                        mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
+                              mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
 
-
+names(cl_comp) <- sapply(strsplit(as.character(names(cl_comp)) ,split="\\."), `[`, 1)
 
 source('code/clustering/plot_helpers.R')
 
-pdf('plots/spectral_clustering_eigengap.pdf')
-for (i in 1:length(cl_egap20)) {
-  mean_purity <- mean(cluster_purity(cl_egap20[[i]]))
-  title <- paste(names(cl_egap20)[i], signif(mean_purity,2), sep=": ")
-  print(plot_kmeans(cl_egap20[[i]], title))
-}
-dev.off()
-
-pdf('plots/spectral_clustering_components.pdf')
+pdf('plots/spectral_clustering_components.pdf', width=5.5, height=5)
 for (i in 1:length(cl_comp)) {
   mean_purity <- mean(cluster_purity(cl_comp[[i]]))
   title <- paste(names(cl_comp)[i], signif(mean_purity,2), sep=": ")
   print(plot_kmeans(cl_comp[[i]], title))
+}
+dev.off()
+
+
+supp <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['supplement']]
+
+cl_comp_supp <- parallel::mclapply(est[supp], spectral.cluster,
+                              mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
+
+names(cl_comp_supp) <- sapply(strsplit(as.character(names(cl_comp_supp)) ,split="\\."), `[`, 1)
+
+pdf('plots/spectral_clustering_components_supp.pdf', width=5.5, height=5)
+for (i in 1:length(cl_comp_supp)) {
+  mean_purity <- mean(cluster_purity(cl_comp_supp[[i]]))
+  title <- paste(names(cl_comp_supp)[i], signif(mean_purity,2), sep=": ")
+  print(plot_kmeans(cl_comp_supp[[i]], title))
 }
 dev.off()
