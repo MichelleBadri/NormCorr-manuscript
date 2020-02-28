@@ -35,13 +35,15 @@ cor_to_graph <- function(R, nedges=2000, rseed=10) {
   ## Store Phylum and Family as vertex attributes
   V(G)$Rank2 <- ag.filt3@tax_table@.Data[V(G)$name,"Rank2"]
   V(G)$Rank5 <- ag.filt3@tax_table@.Data[V(G)$name,"Rank5"]
-  V(G)$Rank6 <- paste(ag.filt3@tax_table@.Data[V(G)$name,"Rank4"],ag.filt3@tax_table@.Data[V(G)$name,"Rank5"],ag.filt3@tax_table@.Data[V(G)$name,"Rank6"])
-  
-  
-  
+  V(G)$Rank6 <- paste(ag.filt3@tax_table@.Data[V(G)$name,"Rank4"],
+                      ag.filt3@tax_table@.Data[V(G)$name,"Rank5"],
+                      ag.filt3@tax_table@.Data[V(G)$name,"Rank6"])
+
+
+
   G <- set.graph.attribute(G, "assortativity_genus", assortativity.nominal(G,types=as.numeric(as.factor(V(G)$Rank6))))
   G <- set.graph.attribute(G, "max_modularity", max(fgreedy$modularity))
-  
+
   ## Store FR layout as vertex attributes
   set.seed(rseed)
   l <- layout.fruchterman.reingold(G)
@@ -51,12 +53,13 @@ cor_to_graph <- function(R, nedges=2000, rseed=10) {
 }
 
 ## Specify seeds for layout orientations only for graph with n=9000
-seed<- c(10,18,7,9,7,11,2,13,2,13,13)
+seed <- c(10,18,7,9,7,11,2,13,2,13,13)
 
 ## compute graph for n=9000
-igr_li <- list()
-for (i in 1:length(est)) {igr_li[[i]] <- cor_to_graph(est[[i]],rseed=seed[i])}
-  
+igr_li <- parallel::mclapply(1:length(est),
+                      function(i) cor_to_graph(est[[i]], rseed=seed[i]),
+                      mc.cores=parallel::detectCores(),
+                      mc.preschedule=FALSE)
 names(igr_li)<- names(est)
 ## compute graph for all subsets for the community analysis line plots
 igr_li_allsub <- parallel::mclapply(est.list.split, cor_to_graph,

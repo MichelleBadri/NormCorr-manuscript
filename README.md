@@ -90,5 +90,4 @@ Rscript code/networks/consensus.R
 ```
 Rscript code/supp/plot_msd.R
 Rscript code/supp/plot_lambda.R
-Rscript code/supp/plot_connectedcomponents.R
 ```

@@ -7,24 +7,24 @@ suppressPackageStartupMessages(library(ggplot2))
 igr_li_allsub <- readRDS("data/RDS/igraph_subsets.RDS")
 
 ## extract community analysis measures from graph objects
-Assortativity_Genus<-unlist(lapply(igr_li_allsub, get.graph.attribute,"assortativity_genus"))
-Maximum_Modularity<-unlist(lapply(igr_li_allsub, get.graph.attribute,"max_modularity"))
+Assortativity_Genus <- unlist(lapply(igr_li_allsub, get.graph.attribute,"assortativity_genus"))
+Maximum_Modularity <- unlist(lapply(igr_li_allsub, get.graph.attribute,"max_modularity"))
 
 datasets <- attr(igr_li_allsub, 'names')
-assort_ddf<-data.frame(datasets,Assortativity_Genus)
-assort_ddf$datasets<-as.character(assort_ddf$datasets)
+assort_ddf <- data.frame(datasets,Assortativity_Genus)
+assort_ddf$datasets <- as.character(assort_ddf$datasets)
 
-maxmod_ddf<-data.frame(datasets,Maximum_Modularity)
-maxmod_ddf$datasets<-as.character(maxmod_ddf$datasets)
+maxmod_ddf <- data.frame(datasets,Maximum_Modularity)
+maxmod_ddf$datasets <- as.character(maxmod_ddf$datasets)
 
 
 ## method color named vector
-col   <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
+col <- unlist(yaml::yaml.load_file('code/helpers/colors.yml'))
 
 ## method shape named vector
-shape   <- unlist(yaml::yaml.load_file('code/helpers/pointshape.yml'))
+shape <- unlist(yaml::yaml.load_file('code/helpers/pointshape.yml'))
 
-## order of methods for plotting legends 
+## order of methods for plotting legends
 allord <- yaml::yaml.load_file('code/helpers/data_order.yml')[['allnorm']]
 
 ## Set up long data for ggplot2 plotting
@@ -48,10 +48,11 @@ rm(coldf)
 rm(shapedf)
 
 
-n <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
+n <- yaml::yaml.load_file('code/helpers/subsamples.yml')
 pdf("plots/relevance_nets_communityanalysis_lineplots.pdf", width=7, height=4)
 Xdf <-assort_ddf
-  ggplot(aes(x=n, y=Assortativity_Genus, col=factor(method, levels=allord), shape=factor(method, levels=allord)), data=Xdf) +
+  ggplot(aes(x=n, y=Assortativity_Genus, col=factor(method, levels=allord),
+            shape=factor(method, levels=allord)), data=Xdf) +
     stat_summary(fun.y=mean,  geom='point', size=2.5,alpha=0.8) +
     stat_summary(fun.y=mean,  geom='line') +
     stat_summary(fun.data=mean_sdl, geom='linerange') +
@@ -61,8 +62,9 @@ Xdf <-assort_ddf
     scale_x_log10(breaks=n) +
     theme_bw()
 
-Xdf <-maxmod_ddf
-  ggplot(aes(x=n, y=Maximum_Modularity, col=factor(method, levels=allord), shape=factor(method, levels=allord)), data=Xdf) +
+Xdf <- maxmod_ddf
+  ggplot(aes(x=n, y=Maximum_Modularity, col=factor(method, levels=allord),
+            shape=factor(method, levels=allord)), data=Xdf) +
     stat_summary(fun.y=mean,  geom='point', size=2.5,alpha=0.8) +
     stat_summary(fun.y=mean,  geom='line') +
     stat_summary(fun.data=mean_sdl, geom='linerange') +
@@ -73,4 +75,3 @@ Xdf <-maxmod_ddf
     scale_x_log10(breaks=n) +
     theme_bw()
 dev.off()
-  

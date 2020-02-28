@@ -7,7 +7,7 @@ OTUDat <- ag.filt3@otu_table@.Data
 
 ## Subsample sizes and replicates
 #testN <- c(25,50,100,250,500,1000,1500,2000)
-testN <- c(25, 50, 100, 200, 350, 700, 1800, 4300, 9000)
+testN <- yaml::yaml.load_file('code/helpers/subsamples.yml')
 reps  <- 5
 
 ## Generate subsampling indexes using a fixed seed

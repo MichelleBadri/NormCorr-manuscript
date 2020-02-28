@@ -15,6 +15,7 @@ dependencies:
   - bioconductor-rhdf5lib=1.8.0
   - bioconductor-s4vectors=0.24.0
   - bioconductor-scran=1.14.1
+  - bioconductor-vsn=3.54.0
   - bioconductor-wrench=1.4.0
   - bioconductor-xvector=0.26.0
   - bioconductor-zlibbioc=1.32.0
@@ -145,6 +146,7 @@ dependencies:
   - r-utf8=1.1.4
   - r-vctrs=0.2.1
   - r-vegan=2.5_6
+  - r-venndiagram=1.6.20
   - r-vgam=1.1_2
   - r-viridislite=0.3.0
   - r-xml2=1.2.2
