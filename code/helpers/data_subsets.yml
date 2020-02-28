@@ -18,3 +18,15 @@ supplement:
   - com.corshrink
   - wren.corshrink
   - raw.corshrink
+ 
+log:  
+  - clr.corshrink
+  - rhoshrink
+  - vst.corshrink
+  - asinh.corshrink
+
+other:
+  - css.corshrink
+  - tss.corshrink
+  - rle.corshrink
+  - com.corshrink
