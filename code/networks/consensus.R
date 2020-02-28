@@ -4,12 +4,16 @@ igr_li <- readRDS("data/RDS/igraph_full.RDS")
 
 ## subset methods for final consensus
 subset <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['consensus']]
-igr_li <- igr_li[subset]
+log    <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['log']]
+other  <- yaml::yaml.load_file('code/helpers/data_subsets.yml')[['other']]
+igr_li_sub   <- igr_li[subset]
+igr_li_log   <- igr_li[log]
+igr_li_other <- igr_li[other]
 
 ## extract signed edge list from igraph list
-get_signed_edges <- function(igr_li) apply(cbind(get.edgelist(igr_li), E(igr_li)$sign), 1, paste, collapse="-")
+get_signed_edges <- function(igr_li_sub) apply(cbind(get.edgelist(igr_li_sub), E(igr_li_sub)$sign), 1, paste, collapse="-")
 
-edge_li <- lapply(igr_li, get_signed_edges)
+edge_li <- lapply(igr_li_sub, get_signed_edges)
 
 ## UpsetR plot
 library(UpSetR)
@@ -26,13 +30,22 @@ dev.off()
 source('code/networks/plot_helpers.R')
 ## Create and plot venn diagram
 pdf("plots/venndiagram.pdf", width=5.5, height=5)
-do.call(draw.quad.venn, as.list(plot_venn_d(igr_li)))
+do.call(draw.quad.venn, as.list(plot_venn_d(igr_li_sub)))
+dev.off()
+
+pdf("plots/venndiagram_supp_log.pdf", width=5.5, height=5)
+do.call(draw.quad.venn, as.list(plot_venn_d(igr_li_log)))
+dev.off()
+
+pdf("plots/venndiagram_supp_other.pdf", width=5.5, height=5)
+do.call(draw.quad.venn, as.list(plot_venn_d(igr_li_other)))
 dev.off()
 
 ## Create and plot consensus network
 ## Merge all graphs / attributes
-igr_consens <- gr_intersect(igr_li)
+igr_consens <- gr_intersect(igr_li_sub)
 
 pdf("plots/consensus_network.pdf", width=6, height=6)
 plot_phy_net(igr_consens, "")
 dev.off()
+
