@@ -3,6 +3,8 @@ suppressPackageStartupMessages(library(ggplot2))
 
 ## load dmat_all, dataset df (ddf), color vector (col)
 source("code/compare/data_helpers.R")
+## remove raw correlations
+ddf <- ddf[ddf$dtype %in% dtypes_all,]
 
 ## compute all embeddings via isometric MDS
 isomds <- function(x) {set.seed(10010) ; MASS::isoMDS(x, k=3)$points}

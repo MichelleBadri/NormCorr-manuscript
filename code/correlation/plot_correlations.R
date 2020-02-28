@@ -18,12 +18,12 @@ est.shuff_sub <- unlist(lapply(est.shuff, unpackcorr), recursive=FALSE)
 fulldf  <- list2df(est.full_sub)
 shuffdf <- list2df(est.shuff_sub)
 
-shuffdf <- shuffdf[shuffdf$n == "50",]
+shuffdf <- shuffdf[shuffdf$n=="50",]
 fulldfsubsmall <- fulldf[fulldf$n=="50",]
 fulldfsublarge <- fulldf[fulldf$n=="9000",]
 shuffdf$group <- "n=50 shuffled" ## Titles for facets in plot
-fulldfsubsmall$group<- "n=50"
-fulldfsublarge$group<- "n=9000"
+fulldfsubsmall$group <- "n=50"
+fulldfsublarge$group <- "n=9000"
 
 combdf <- rbind(shuffdf,fulldfsubsmall,fulldfsublarge)
 

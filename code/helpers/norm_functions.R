@@ -39,9 +39,3 @@ VST <- function(OTU) {
       estimateDispersionsFit(quiet=TRUE, "local") %>%
       getVarianceStabilizedData
 }
-
-suppressPackageStartupMessages(library(scran))
-scran <- function(OTU) {
-  sce <- scran::calculateSumFactors(OTU)
-  log(t(sweep(OTU,2,sce,"/")))
-}

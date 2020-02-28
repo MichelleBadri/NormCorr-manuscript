@@ -5,15 +5,12 @@ est.list <- readRDS("data/RDS/est_all.RDS")
 
 ## Calculate pearson correlation from amgut estimates
 list.raw <- unlist(lapply(est.list, function(x) x[grep("amgut", names(x))]), recursive=FALSE)
-cor.list <- lapply(list.raw,cor)
-
-names(cor.list)<- paste(sapply(strsplit(names(cor.list),split="\\."), `[`, 1), sapply(strsplit(names(cor.list),split="\\."), `[`, 3),"cor",sep=".")
 
 ## Keep correlations/proportionalities and unlist 1 level
 est.list <- unlist(lapply(est.list, function(x) x[grep("cor|rho", names(x))]), recursive=FALSE)
 
-## Combine with corshrink and proportionality
-est.list.cor <- c(est.list,cor.list)
+# ## Combine with corshrink and proportionality
+# est.list.cor <- c(est.list,cor.list)
 
 #saveRDS(est.list.cor, file="data/RDS/est.list.corr.RDS")
 #est.list.cor <- readRDS(file="data/RDS/est.list.corr.RDS")
@@ -24,23 +21,33 @@ cmd.all  <- corrmat.dist(est.list)
 #forst.all <- forstner.dist(est.list)
 #riemn.all <- riemannian.dist(est.list)
 
-frob.all.cor  <- frobenius.dist(est.list.cor)
-cmd.all.cor   <- corrmat.dist(est.list.cor)
-
 ## Save distances between corshrink/propr as an RDS object
-dmat_all <- list(#forst=forst.all_cor, riemn=riemn.all_cor,
-                     frob=frob.all,
-                     spect=spect.all, 
-                     cmd=cmd.all)
+dmat_all <- list(frob=frob.all,
+                 spect=spect.all,
+                 cmd=cmd.all)
 attr(dmat_all, 'datasets') <- names(est.list)
 
 saveRDS(dmat_all, file="data/RDS/dmat_all.RDS")
 
+## Compute distances on 'raw' correlation matrices
+corNA <- function(x) {
+##  convert NAs to 0s in case there are any zero stddev vars
+  corX <- suppressWarnings(cor(x))
+  corX[is.na(corX)] <- 0
+  corX
+}
+cor.list <- parallel::mclapply(list.raw, corNA,
+                    mc.cores=parallel::detectCores(), mc.preschedule=FALSE)
+names(cor.list) <- paste0(gsub("amgut.", "", names(cor.list)), ".cor")
+
+## We only need to calculate intra-method distances for raw correlations
+cor.list.t <- split(cor.list,  sapply(strsplit(names(cor.list), "\\."), '[', 2))
+frob.all.cor  <- lapply(cor.list.t, frobenius.dist)
+cmd.all.cor   <- lapply(cor.list.t, corrmat.dist)
 
 ## Save distances between pearson/corshrink/propr as an RDS object
-dmat_all_cor <- list(#forst=forst.all_cor, riemn=riemn.all_cor,
-                      frob=frob.all.cor,
+dmat_all_cor <- list(frob=frob.all.cor,
                       cmd=cmd.all.cor)
-attr(dmat_all_cor, 'datasets') <- names(est.list.cor)
+attr(dmat_all_cor, 'datasets') <- lapply(cor.list.t, names)
 
 saveRDS(dmat_all_cor, file="data/RDS/dmat_all_cor.RDS")
