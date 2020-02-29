@@ -167,4 +167,4 @@ dependencies:
   - zstd=1.4.4
   - pip
   - pip:
-    - git+git://github.com/zdk123/SynapseSync@58cd748145af703c2fb5d1214dc7a3458d5d546b
+    - git+git://github.com/zdk123/SynapseSync@2312384cbc753118b0fa927802fdc0f49de7cc94

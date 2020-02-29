@@ -42,13 +42,52 @@ Compare normalization methods and correlation patterns for microbiome data
 ```
 
 
-# Reproduce analysis
-
-Set up conda environment with packages/dependencies
+## Setup dependencies and data
+Clone this repo and then set up conda environment with packages/dependencies
 ```sh
 conda env create -f docker/environment.yml -n normcorr
 conda activate normcorr
 ```
+
+Or pull down and run via the pre-built docker container
+```sh
+docker pull docker.synapse.org/syn21654780/normcorr:latest
+docker tag docker.synapse.org/syn21654780/normcorr:latest normcorr:latest
+docker run -w $PWD -v $PWD:$PWD -ti normcorr:latest
+```
+
+### Sync data from Synapse
+Data, code and provenance for this project is hosted on [Synapse](synapse.org), project ID [syn21654780](https://www.synapse.org/#!Synapse:syn21654780). Get a synapse account to proceed.
+
+The code is mirrored on github, but the data is stored
+on a a public google drive.
+Source files `data/amgut/` and intermediate RDS files `data/RDS/`
+can be downloaded individually via the Synapse console or by
+syncing via python scripts via the (experimental) [SynapseSync package](https://github.com/zdk123/SynapseSync) - included in the conda environment, or `pip install git+https://github.com/zdk123/SynapseSync.git` for the latest version.
+
+Either set up a [synapseConfig file](https://python-docs.synapse.org/build/html/Credentials.html) or proceed with user name and password in a python session:
+
+```python
+from synapsesync import SynpaseProject, GDriveSession
+from synapseutils.sync import syncFromSynapse
+
+## With a ~/.synapseConfig file
+syn = SynpaseProject("syn21654780")
+## OR ##
+## With user/pass
+syn = SynpaseProject()
+syn.login("<usr>", "<pass>")
+syn.set_project("syn21654780")
+
+syn.set_session(GDriveSession())
+
+## sync source data and/or RDS files
+syncFromSynapse(syn, "syn21654866", path="data/amgut/")
+syncFromSynapse(syn, "syn21654865", path="data/RDS/")
+```
+
+# Reproduce analysis
+
 All scripts should be run from the base directory.
 
 ### Process American Gut data
