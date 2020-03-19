@@ -1,6 +1,24 @@
-## NormCorr
-Compare normalization methods and correlation patterns for microbiome data
+## Code repository for the manuscript "Shrinkage improves estimation of microbial associations under different normalization methods"
 
+
+Consistent estimation of associations in microbial genomic survey count data is fundamental to microbiome research.
+Technical limitations, including compositionality, low sample sizes, and technical variability, 
+obstruct standard application of association measures and require data normalization prior to estimating associations.
+
+In this project, we investigate the interplay between data normalization and microbial association estimation by a
+comprehensive analysis of statistical consistency. Leveraging the large sample size of the American Gut Project (AGP),
+we assess the consistency of the two prominent linear association estimators, correlation and proportionality, under
+different sample scenarios and data normalization schemes, including RNA-seq analysis work flows and log-ratio
+transformations. 
+
+We show that shrinkage estimation, a standard technique in high-dimensional statistics, can universally improve the quality of association estimates for microbiome data. We find that large-scale association patterns 
+in the AGP data can be grouped into five normalization-dependent classes. 
+
+Using microbial association network construction and clustering as examples of exploratory data analysis, we show that variance-stabilizing and log-ratio approaches provide for the most consistent estimation of taxonomic and structural coherence. Taken together, the findings from our reproducible analysis workflow have important implications for microbiome studies in multiple stages of analysis, particularly when only small sample sizes are available.
+
+## Data and code availability 
+This is the GitHub repository for the project. The Synapse project syn21654780 is hosted [here](https://www.synapse.org/#!Synapse:syn21654780). Data used for this study was accessed from the [AGP](ftp://ftp.microbio.me/AmericanGut/ag-2017-12-04/).
+The latest complete American Gut Project dataset can be accessed on Qiita using study [ID 10317](https://qiita.ucsd.edu/study/description/10317).
 
 ## Repo Structure:
 ```
