@@ -21,7 +21,7 @@ This is the GitHub repository for the project. The corresponding Synapse project
 
 The latest complete American Gut Project dataset can be accessed on Qiita using study [ID 10317](https://qiita.ucsd.edu/study/description/10317).
 
-## Repo Structure:
+## Repository structure
 ```
 .
 ├── code
