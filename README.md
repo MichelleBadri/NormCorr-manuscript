@@ -12,7 +12,7 @@ we assess the consistency of the two prominent linear association estimators, co
 different sample scenarios and data normalization schemes, including RNA-seq analysis work flows and log-ratio
 transformations. 
 
-
+![Project workflow](https://i.imgur.com/qYUXLy0.png)
 
 We show that shrinkage estimation, a standard technique in high-dimensional statistics, can universally improve the quality of association estimates for microbiome data. 
 
