@@ -151,3 +151,11 @@ Rscript code/networks/consensus.R
 Rscript code/supp/plot_msd.R
 Rscript code/supp/plot_lambda.R
 ```
+
+
+## References
+
+A prior version of the project has been posted on biorxiv:
+
+[1] Michelle Badri, Zachary D. Kurtz, Christian L. Müller, Richard Bonneau, [Normalization methods for microbial abundance data strongly affect correlation estimates] (https://www.biorxiv.org/content/10.1101/406264v1)
+
