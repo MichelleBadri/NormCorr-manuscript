@@ -18,7 +18,7 @@ in the AGP data can be grouped into five normalization-dependent classes.
 Using microbial association network construction and clustering as examples of exploratory data analysis, we show that variance-stabilizing and log-ratio approaches provide for the most consistent estimation of taxonomic and structural coherence. Taken together, the findings from our reproducible analysis workflow have important implications for microbiome studies in multiple stages of analysis, particularly when only small sample sizes are available.
 
 ## Data and code availability 
-This is the GitHub repository for the project. The Synapse project syn21654780 is hosted [here](https://www.synapse.org/#!Synapse:syn21654780). Data used for this study was accessed from the [AGP](ftp://ftp.microbio.me/AmericanGut/ag-2017-12-04/).
+This is the GitHub repository for the project. The Synapse project syn21654780 is hosted [here](https://www.synapse.org/#!Synapse:syn21654780). Data used for this study was accessed at ftp://ftp.microbio.me/AmericanGut/ag-2017-12-04/.
 The latest complete American Gut Project dataset can be accessed on Qiita using study [ID 10317](https://qiita.ucsd.edu/study/description/10317).
 
 ## Repo Structure:
