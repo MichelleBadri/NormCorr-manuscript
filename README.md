@@ -18,10 +18,10 @@ We show that [shrinkage estimation](https://en.wikipedia.org/wiki/Shrinkage_(sta
 the consistency of downstream exploratory microbial data analysis tasks.
 
 ## Data and code availability 
-This is the GitHub repository for the project. Please see below for all technical details.
+The GitHub project repository for the project is hosted at https://github.com/MichelleBadri/NormCorr_manuscript. 
+The Synapse project repository is hosted at [syn21654780](https://www.synapse.org/#!Synapse:syn21654780). 
 
-The corresponding Synapse project is hosted at [syn21654780](https://www.synapse.org/#!Synapse:syn21654780). Data used for this study was accessed at ftp://ftp.microbio.me/AmericanGut/ag-2017-12-04/.
-
+Data used for this study was accessed at ftp://ftp.microbio.me/AmericanGut/ag-2017-12-04/.
 The latest complete American Gut Project dataset can be accessed on Qiita using study [ID 10317](https://qiita.ucsd.edu/study/description/10317).
 
 ## Repository structure
