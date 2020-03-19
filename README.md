@@ -6,7 +6,7 @@ Consistent estimation of associations in microbial genomic survey count data is 
 Technical limitations, including compositionality, low sample sizes, and technical variability, 
 obstruct standard application of association measures and require data normalization prior to estimating associations.
 
-In this project, we investigate the interplay between data normalization and microbial association estimation by a
+In this project, we investigate the interplay between data normalization and microbial association estimation through
 comprehensive analysis of statistical consistency. Leveraging the large sample size of the American Gut Project (AGP),
 we assess the performance of the two linear association estimators, correlation and proportionality, under
 different sample scenarios and data normalization schemes, including RNA-seq analysis work flows and log-ratio
