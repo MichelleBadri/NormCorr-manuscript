@@ -1,4 +1,4 @@
-# Shrinkage improves estimation of microbial associations under different normalization methods
+# Shrinkage estimation of microbial associations under different normalization methods
 
 ## Background
 
