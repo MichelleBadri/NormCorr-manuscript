@@ -108,7 +108,7 @@ syncFromSynapse(syn, "syn21654866", path="data/amgut/")
 syncFromSynapse(syn, "syn21654865", path="data/RDS/")
 ```
 
-# Reproduce analysis
+## Reproduce analysis
 
 All scripts should be run from the base directory.
 
@@ -159,4 +159,9 @@ Rscript code/supp/plot_lambda.R
 A prior version of the project has been posted on biorxiv:
 
 [1] Michelle Badri, Zachary D. Kurtz, Christian L. Müller, Richard Bonneau, [Normalization methods for microbial abundance data strongly affect correlation estimates](https://www.biorxiv.org/content/10.1101/406264v1)
+
+The current version of the project is available on biorxiv:
+
+[2] Michelle Badri, Zachary D. Kurtz, Richard Bonneau, Christian L. Müller [Shrinkage improves estimation of microbial associations under different normalization methods]()
+
 
