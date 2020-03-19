@@ -8,16 +8,18 @@ obstruct standard application of association measures and require data normaliza
 
 In this project, we investigate the interplay between data normalization and microbial association estimation by a
 comprehensive analysis of statistical consistency. Leveraging the large sample size of the American Gut Project (AGP),
-we assess the consistency of the two prominent linear association estimators, correlation and proportionality, under
+we assess the performance of the two linear association estimators, correlation and proportionality, under
 different sample scenarios and data normalization schemes, including RNA-seq analysis work flows and log-ratio
 transformations. 
 
 ![Project workflow](https://i.imgur.com/qYUXLy0.png)
 
-We show that shrinkage estimation, a standard technique in high-dimensional statistics, can universally improve the quality of association estimates for microbiome data. 
+We show that shrinkage estimation can universally improve the quality of association estimates for microbiome data. 
 
 ## Data and code availability 
-This is the GitHub repository for the project. The corresponding Synapse project is hosted at [syn21654780](https://www.synapse.org/#!Synapse:syn21654780). Data used for this study was accessed at ftp://ftp.microbio.me/AmericanGut/ag-2017-12-04/.
+This is the GitHub repository for the project. Please see below for all technical details.
+
+The corresponding Synapse project is hosted at [syn21654780](https://www.synapse.org/#!Synapse:syn21654780). Data used for this study was accessed at ftp://ftp.microbio.me/AmericanGut/ag-2017-12-04/.
 
 The latest complete American Gut Project dataset can be accessed on Qiita using study [ID 10317](https://qiita.ucsd.edu/study/description/10317).
 
@@ -76,10 +78,10 @@ docker run -w $PWD -v $PWD:$PWD -ti normcorr:latest
 ```
 
 ### Sync data from Synapse
-Data, code and provenance for this project is hosted on [Synapse](synapse.org), project ID [syn21654780](https://www.synapse.org/#!Synapse:syn21654780). Get a synapse account to proceed.
+Data, code, and provenance for this project is hosted on [Synapse](synapse.org), project ID [syn21654780](https://www.synapse.org/#!Synapse:syn21654780). Get a synapse account to proceed.
 
-The code is mirrored on github, but the data is stored
-on a a public google drive.
+The code is mirrored on GitHub, but the data is stored
+on a public google drive.
 Source files `data/amgut/` and intermediate RDS files `data/RDS/`
 can be downloaded individually via the Synapse console or by
 syncing via python scripts via the (experimental) [SynapseSync package](https://github.com/zdk123/SynapseSync) - included in the conda environment, or `pip install git+https://github.com/zdk123/SynapseSync.git` for the latest version.
