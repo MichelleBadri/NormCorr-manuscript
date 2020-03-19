@@ -1,5 +1,6 @@
-## Code repository for the manuscript "Shrinkage improves estimation of microbial associations under different normalization methods"
+# Repository for the project "Shrinkage improves estimation of microbial associations under different normalization methods"
 
+## Background
 
 Consistent estimation of associations in microbial genomic survey count data is fundamental to microbiome research.
 Technical limitations, including compositionality, low sample sizes, and technical variability, 
