@@ -14,7 +14,7 @@ transformations.
 
 ![Project workflow](https://i.imgur.com/qYUXLy0.png)
 
-We show that shrinkage estimation can universally improve the quality of association estimates for microbiome data and 
+We show that [shrinkage estimation](https://en.wikipedia.org/wiki/Shrinkage_(statistics)) can universally improve the quality of association estimates for microbiome data and 
 the consistency of downstream exploratory microbial data analysis tasks.
 
 ## Data and code availability 
