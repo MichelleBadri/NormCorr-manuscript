@@ -162,6 +162,6 @@ A manuscript describing a prior version of the project has been posted on biorxi
 
 The current version of the mansucript is available on biorxiv:
 
-[2] Michelle Badri, Zachary D. Kurtz, Richard Bonneau, Christian L. Müller [Shrinkage improves estimation of microbial associations under different normalization methods]()
+[2] Michelle Badri, Zachary D. Kurtz, Richard Bonneau, Christian L. Müller [Shrinkage improves estimation of microbial associations under different normalization methods](https://www.biorxiv.org/content/10.1101/406264v2)
 
 
